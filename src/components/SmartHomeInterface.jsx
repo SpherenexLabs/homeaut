@@ -969,9 +969,9 @@ const SmartHomeInterface = () => {
     set(ref(database, `${basePath}/servo`), position)
       .then(() => {
         const messages = {
-          'en-US': position === 90 ? 'Gate opened' : 'Gate closed',
-          'kn-IN': position === 90 ? 'ಗೇಟ್ ತೆರೆಯಲಾಗಿದೆ' : 'ಗೇಟ್ ಮುಚ್ಚಲಾಗಿದೆ',
-          'hi-IN': position === 90 ? 'गेट खोला गया' : 'गेट बंद किया गया'
+          'en-US': position === 1 ? 'Gate opened' : 'Gate closed',
+          'kn-IN': position === 1 ? 'ಗೇಟ್ ತೆರೆಯಲಾಗಿದೆ' : 'ಗೇಟ್ ಮುಚ್ಚಲಾಗಿದೆ',
+          'hi-IN': position === 1 ? 'गेट खोला गया' : 'गेट बंद किया गया'
         };
         setNotificationQueue(prev => [...prev, messages[selectedLanguage]]);
       })
@@ -1146,7 +1146,7 @@ const SmartHomeInterface = () => {
       const hasCloseCommand = patterns.close.some(cmd => command.includes(cmd));
       
       if (hasOpenCommand) {
-        setGatePosition(90);
+        setGatePosition(1);
         return;
       } else if (hasCloseCommand) {
         setGatePosition(0);
@@ -1315,7 +1315,7 @@ const SmartHomeInterface = () => {
           <div className="sensor-info">
             <span className="sensor-label">Gate</span>
             <span className="sensor-value">
-              {sensorData.servo !== null ? (sensorData.servo === 0 ? 'Closed' : sensorData.servo === 90 ? 'Open' : `${sensorData.servo}°`) : '--'}
+              {sensorData.servo !== null ? (sensorData.servo === 0 ? 'Closed' : sensorData.servo === 1 ? 'Open' : sensorData.servo) : '--'}
             </span>
           </div>
         </div>
@@ -1360,9 +1360,9 @@ const SmartHomeInterface = () => {
         </div>
 
         {/* Gate Control */}
-        <div className={`room ${sensorData.servo === 90 ? 'active' : ''}`}>
+        <div className={`room ${sensorData.servo === 1 ? 'active' : ''}`}>
           <h2 className="room-name">Gate</h2>
-          <Switch isOn={sensorData.servo === 90 ? "1" : "0"} onToggle={() => setGatePosition(sensorData.servo === 90 ? 0 : 90)} />
+          <Switch isOn={sensorData.servo === 1 ? "1" : "0"} onToggle={() => setGatePosition(sensorData.servo === 1 ? 0 : 1)} />
         </div>
       </div>
 
